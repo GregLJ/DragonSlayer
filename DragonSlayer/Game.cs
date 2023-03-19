@@ -35,13 +35,15 @@ namespace DragonSlayer
 				Console.Write("Enter your choice: ");
 				caveChoice = int.Parse(Console.ReadLine());
 
-				Cave currentCave = caves[caveChoice];
-
-				if (caveChoice < 1 || caveChoice > 5)
+				if (caveChoice < 1 || caveChoice > 5 || !caves.ContainsKey(caveChoice))
 				{
 					Console.WriteLine("Invalid cave choice. Try Again.");
 					continue;
 				}
+
+				Cave currentCave = caves[caveChoice];
+
+			
 
 				Console.WriteLine($"\nYou investigate the {currentCave.Name} and encounter a {currentCave.Dragon.Name}!");
 
@@ -50,8 +52,8 @@ namespace DragonSlayer
 					hero.Strength += currentCave.Dragon.Strength;
 					hero.Defense += currentCave.Dragon.Defense;
 					hero.Range += currentCave.Dragon.Range;
-					Console.WriteLine($"You have met a Golden Dragon, increase all stats by 1");
-					Console.WriteLine($"Updated stats: Strength - {hero.Strength}, Defense - {hero.Defense}, Range - {hero.Range}");
+					Console.WriteLine($"You have met a {currentCave.Dragon.Name}, increase all stats by {currentCave.Dragon.Strength}");
+					Console.WriteLine($"Updated stats: Strength[{hero.Strength}], Defense[{hero.Defense}], Range[{hero.Range}]");
 					caves.Remove(caveChoice);
 				}
 				else
@@ -83,14 +85,13 @@ namespace DragonSlayer
 					else if (hero.isAlive)
 					{
 						hero.HitPoints = hero.Defense;
+						Console.WriteLine($"{hero.Name} has triumphed!");
 						hero.LevelUp();
 						caves.Remove(caveChoice);
-						Console.WriteLine($"{hero.Name} has triumphed! You are now Level {hero.Level}");
 						if (caves.Count == 0)
 						{
-							Console.WriteLine("You have vanquished this world of all the evil dragons!");
+							Console.WriteLine("\nYou have vanquished this world of all the evil dragons!");
 							PromptUserPlayAgain();
-
 						}
 					}
 					else
@@ -104,7 +105,7 @@ namespace DragonSlayer
 
 		private void PromptUserPlayAgain()
 		{
-			Console.WriteLine("Would you like to play again?");
+			Console.WriteLine("Would you like to play again, [y]es or [n]o?");
 			var playAgain = Console.ReadLine();
 			if (playAgain.ToLower().StartsWith("n"))
 			{

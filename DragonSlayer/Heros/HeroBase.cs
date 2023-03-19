@@ -45,6 +45,10 @@ namespace DragonSlayer.Heros
             Strength++;
             Defense++;
             Range++;
-        }
+            Console.WriteLine($"\nYour {Name} has leveled up to level {Level}");
+            Console.WriteLine($"Strength: {Strength}");
+			Console.WriteLine($"Defense: {Defense}");
+			Console.WriteLine($"Range: {Range}");
+		}
     }
 }
